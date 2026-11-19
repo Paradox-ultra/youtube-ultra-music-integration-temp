@@ -53,6 +53,27 @@ public final class AccountBridge {
         }
     }
 
+    public static boolean matchesSelectedAccount(Object value) {
+        if (!(value instanceof android.accounts.Account)) return false;
+        SharedPreferences h = host;
+        return h != null && ((android.accounts.Account) value).name.equals(h.getString("user_account", null));
+    }
+
+    public static String diagnosticSummary() {
+        SharedPreferences h = host, p = plugin;
+        String ha = h == null ? null : h.getString("user_account", null);
+        String hi = h == null ? null : h.getString("user_identity_id", null);
+        String pa = p == null ? null : p.getString("user_account", null);
+        String pi = p == null ? null : p.getString("user_identity_id", null);
+        return "selected-host-present=" + (ha != null && hi != null)
+            + " plugin-preferences-bound=" + (p != null)
+            + " identity-seeded=" + identitySeeded
+            + " controller-bound=" + (controller != null)
+            + " account-match=" + (ha != null && ha.equals(pa))
+            + " identity-match=" + (hi != null && hi.equals(pi))
+            + " incognito=" + (h != null && h.getBoolean("IS_INCOGNITO_SESSION_IDENTITY", false));
+    }
+
     public static boolean hasSelectedHost() {
         SharedPreferences h = host;
         return h != null

@@ -49,3 +49,8 @@ SHA256 `576f7f74f553cbdc5be4f862ea460555990ede77c6b4f3dbb8aba7388b79b84b`. Corre
 ## Shared-library routing pwoHvhfX
 
 SHA256 `eab95ea30ee457455a53baa0a00e8f19956817e6f023ea8df24e3baeeec9ad7d`. Routes the four already-declared shared-library package families through the app loader. No donor class was missing. Current source reproduces the whitelist and marker used in classes15.dex. Not phone-tested. See SHARED-LIBRARY-CLASS-AUDIT.md.
+
+
+## Library network observation KvJfoSxD
+
+SHA256 `73b663951d54915a66dfe40a8ca00e43de6f451dd62a5611a4501e29494552f7`. Adds metadata-only request/auth/connectivity observation and error-state dialog. No source-confirmed root cause yet; this is not a claimed network fix. Not phone-tested. See NETWORK-OBSERVATION.md.

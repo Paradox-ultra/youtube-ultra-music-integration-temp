@@ -1,0 +1,1 @@
+package android.accounts;public class Account {public final String name,type;public Account(String n,String t){name=n;type=t;}}

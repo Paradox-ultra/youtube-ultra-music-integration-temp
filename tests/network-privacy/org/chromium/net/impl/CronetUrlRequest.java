@@ -1,0 +1,1 @@
+package org.chromium.net.impl;public class CronetUrlRequest {private String n;private java.util.List<java.util.Map.Entry<String,String>> r;public CronetUrlRequest(String url,java.util.List<java.util.Map.Entry<String,String>> headers){n=url;r=headers;}}

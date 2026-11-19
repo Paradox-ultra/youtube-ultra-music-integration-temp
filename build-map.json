@@ -80,5 +80,11 @@
     "change": "Restore manifest-declared shared-library visibility through the host app loader; no donor classes dropped",
     "apk_sha256": "eab95ea30ee457455a53baa0a00e8f19956817e6f023ea8df24e3baeeec9ad7d",
     "caveat": "Not phone-tested. Reproduced classloader regression passes; no Library/auth/playback or UI proof."
+  },
+  {
+    "build": "KvJfoSxD",
+    "change": "Metadata-only Library request/auth/connectivity observation, all original donor operations preserved",
+    "apk_sha256": "73b663951d54915a66dfe40a8ca00e43de6f451dd62a5611a4501e29494552f7",
+    "caveat": "Network diagnostic, not a confirmed Library fix. Not phone-tested; no device request/status evidence yet."
   }
 ]
