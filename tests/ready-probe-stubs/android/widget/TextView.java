@@ -1,0 +1,1 @@
+package android.widget;public class TextView extends android.view.View{private String text;public TextView(Object x){}public void setText(String s){text=s;}public CharSequence getText(){return text;}}

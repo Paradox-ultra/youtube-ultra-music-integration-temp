@@ -1,0 +1,1 @@
+package android.view;public class View{public static final int VISIBLE=0;public int visible;public boolean selected;public int getVisibility(){return visible;}public boolean isSelected(){return selected;}public CharSequence getContentDescription(){return null;}public ViewTreeObserver getViewTreeObserver(){return new ViewTreeObserver();}}

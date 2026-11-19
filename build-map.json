@@ -61,5 +61,11 @@
     "change": "bounded diagnostic rendering, process recovery, lifecycle dispatch/once guard, ABI/cache validation",
     "apk_sha256": "1851afb41cbf04aea27f8025cb4805fc3e1c873809a6d03eefae2def4ee861f3",
     "caveat": "Released as not phone-tested. Physical Test Lab attempts inconclusive/infrastructure-failed; static and synthetic checks only."
+  },
+  {
+    "build": "xNn98Pka",
+    "change": "default-package classloader fast path and per-attempt last-sample/Library-ready timing",
+    "apk_sha256": "dd3581ae164de25f88b4fcac17147d56f6cfeceb982b5a34d4cc780aed4ca921",
+    "caveat": "Not phone-tested. No measured speed, real-account, playback or localized readiness claim."
   }
 ]

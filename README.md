@@ -29,3 +29,5 @@ See [SOURCE-HARDENING-2026-11-19.md](SOURCE-HARDENING-2026-11-19.md) for source 
 ## Combined startup sweep
 
 See [STARTUP-SWEEP.md](STARTUP-SWEEP.md) for the current changes, verification and runtime limits.
+
+See [CLASSLOADER-TIMING.md](CLASSLOADER-TIMING.md) for xNn98Pka, its narrow classloader change and timing limits.

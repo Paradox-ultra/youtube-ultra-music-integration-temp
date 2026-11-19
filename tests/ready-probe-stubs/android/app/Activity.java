@@ -1,0 +1,1 @@
+package android.app;public class Activity{public boolean isFinishing(){return false;}public boolean isDestroyed(){return false;}public boolean hasWindowFocus(){return true;}public android.view.Window getWindow(){return new android.view.Window();}}

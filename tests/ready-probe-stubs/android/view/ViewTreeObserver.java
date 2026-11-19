@@ -1,0 +1,1 @@
+package android.view;public class ViewTreeObserver{public interface OnDrawListener{void onDraw();}public void addOnDrawListener(OnDrawListener l){}public void removeOnDrawListener(OnDrawListener l){}public boolean isAlive(){return true;}}

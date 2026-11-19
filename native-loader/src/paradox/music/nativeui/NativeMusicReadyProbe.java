@@ -1,0 +1,9 @@
+package paradox.music.nativeui;
+import android.app.Activity;import android.os.*;import android.view.*;import android.widget.TextView;
+/** Library ready requires a drawn, selected Library tab; Activity resume alone is not success. */
+public final class NativeMusicReadyProbe {
+ private static final Handler MAIN=new Handler(Looper.getMainLooper());
+ public static void watch(Activity a){final long until=SystemClock.elapsedRealtime()+120000;final View root=a.getWindow().getDecorView();final boolean[] drawn={false};final ViewTreeObserver.OnDrawListener draw=()->drawn[0]=true;root.getViewTreeObserver().addOnDrawListener(draw);MAIN.post(new Runnable(){public void run(){if(a.isDestroyed()||a.isFinishing()){remove();return;}if(drawn[0]&&a.hasWindowFocus()&&selectedLibrary(root,false,new int[]{0})){NativeMusicDiagnostics.libraryReady();remove();return;}if(SystemClock.elapsedRealtime()>=until){NativeMusicDiagnostics.phase("Music Activity resumed; Library-ready not confirmed within 120 seconds");NativeMusicStartupTrace.end();remove();return;}MAIN.postDelayed(this,750);}void remove(){if(root.getViewTreeObserver().isAlive())root.getViewTreeObserver().removeOnDrawListener(draw);}});}
+ private static boolean selectedLibrary(View v,boolean parentSelected,int[] visited){if(++visited[0]>600||v.getVisibility()!=View.VISIBLE)return false;boolean selected=parentSelected||v.isSelected();CharSequence text=v instanceof TextView?((TextView)v).getText():null;CharSequence desc=v.getContentDescription();if(selected&&(library(text)||library(desc)))return true;if(v instanceof ViewGroup){ViewGroup group=(ViewGroup)v;for(int i=0;i<group.getChildCount();i++)if(selectedLibrary(group.getChildAt(i),selected,visited))return true;}return false;}
+ private static boolean library(CharSequence text){if(text==null)return false;String s=text.toString().trim();return s.equalsIgnoreCase("Library")||s.equalsIgnoreCase("Library, tab")||s.startsWith("Library, tab,");}
+}

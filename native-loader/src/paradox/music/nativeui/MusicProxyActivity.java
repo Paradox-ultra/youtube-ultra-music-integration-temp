@@ -14,6 +14,7 @@ import java.io.StringWriter;
 public class MusicProxyActivity extends PluginContainerActivity {
     private static final String TAG = "UltraMusic";
     private boolean startupFailed;
+    private boolean readyProbeStarted;
     private boolean superCreateCalled;
 
     @Override
@@ -73,7 +74,8 @@ public class MusicProxyActivity extends PluginContainerActivity {
             return;
         }
         super.onResume();
-        NativeMusicDiagnostics.completed();
+        NativeMusicDiagnostics.phase("Music Activity resumed; waiting for drawn selected Library tab");
+        if(!readyProbeStarted){readyProbeStarted=true;NativeMusicReadyProbe.watch(this);}
     }
 
     @Override
@@ -104,16 +106,6 @@ public class MusicProxyActivity extends PluginContainerActivity {
     }
 
     public static void showFailure(Activity a, String phase, Throwable e) {
-        Log.e(TAG, phase, e);
-        StringWriter s = new StringWriter();
-        e.printStackTrace(new PrintWriter(s));
-        TextView t = new TextView(a);
-        t.setTextSize(12);
-        t.setPadding(24, 48, 24, 24);
-        t.setTextIsSelectable(true);
-        t.setText("Music failed at: " + phase + "\n\n" + s);
-        ScrollView scroll = new ScrollView(a);
-        scroll.addView(t);
-        a.setContentView(scroll);
+        NativeMusicDiagnostics.showCaught(a,phase,e);
     }
 }
