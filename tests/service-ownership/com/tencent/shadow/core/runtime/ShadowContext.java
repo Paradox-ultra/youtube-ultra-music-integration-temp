@@ -1,0 +1,1 @@
+package com.tencent.shadow.core.runtime;import android.content.*;import com.tencent.shadow.core.loader.managers.*;public class ShadowContext extends Base {public final ComponentManager mPluginComponentLauncher=new ComponentManager();public void unbindService(ServiceConnection c){mPluginComponentLauncher.unbindService(this,c);}}

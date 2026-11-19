@@ -1,8 +1,12 @@
 package paradox.music.nativeui;
 import java.util.*;
-/** Identity-based ownership routing. Holds no service lifecycle work and never waits for main. */
+/** Only known plugin connections can enter the main-thread plugin dispatcher. */
 public final class NativeMusicServiceConnections {
- private static final Map<Object,Set<Object>> EXTERNAL=new WeakHashMap<>();
- public static synchronized void bound(Object context,Object connection){Set<Object> set=EXTERNAL.get(context);if(set==null){set=Collections.newSetFromMap(new IdentityHashMap<Object,Boolean>());EXTERNAL.put(context,set);}set.add(connection);}
- public static synchronized boolean takeExternal(Object context,Object connection){Set<Object> set=EXTERNAL.get(context);if(set==null||!set.remove(connection))return false;if(set.isEmpty())EXTERNAL.remove(context);return true;}
+ private static final Set<Object> PLUGIN=Collections.newSetFromMap(new IdentityHashMap<Object,Boolean>());
+ public static synchronized void pluginBinding(Object connection){PLUGIN.add(connection);}
+ public static synchronized boolean isPlugin(Object connection){return PLUGIN.contains(connection);}
+ public static synchronized void pluginUnbound(Object connection){PLUGIN.remove(connection);}
+ // Compatibility with the previously patched framework bind sites. No external tracking is needed.
+ public static void bound(Object context,Object connection){}
+ public static boolean takeExternal(Object context,Object connection){return !isPlugin(connection);}
 }

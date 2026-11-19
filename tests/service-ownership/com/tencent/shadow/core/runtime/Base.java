@@ -1,0 +1,1 @@
+package com.tencent.shadow.core.runtime;import android.content.*;public class Base {public int external;public void unbindService(ServiceConnection c){external++;}}

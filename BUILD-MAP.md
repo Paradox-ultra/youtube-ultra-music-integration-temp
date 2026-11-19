@@ -25,3 +25,7 @@ Source `609fafe00243b1bf9a4f8144f40ac85e49119769`; SHA256 `8ccd3edce93ec7c81186e
 ## Combined startup candidate ZDfc80OT
 
 SHA256 `1851afb41cbf04aea27f8025cb4805fc3e1c873809a6d03eefae2def4ee861f3`. Production source commit `99f0df2edd7695bfce9615fd39e82883855f28c6`. Released with the explicit not-phone-tested caveat. See STARTUP-SWEEP.md for static tests and inconclusive physical test attempts.
+
+## Positive service-ownership candidate 4tPo8XDE
+
+SHA256 `8ff64f6c4402ecbd17eb9c63ecb8e51dfb04a167e7fe9c437bc0a8433c2c8bb0`. Failed-bind framework cleanup bypasses plugin main-thread waits; targeted later thread snapshots added. Not phone-tested. See SERVICE-OWNERSHIP.md.
