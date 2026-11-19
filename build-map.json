@@ -34,5 +34,19 @@
     "change": "reuse initialized host SslGuard at any installed position",
     "apk_sha256": "ab391188413a2596db00e71d018094d157a3e7f180c4193dda61078d585ef5ae",
     "recovery_commit": "07fcf61df052bfaaaba8b523ad1df4ee2cf40038"
+  },
+  {
+    "build": "z1S9S64v",
+    "change": "ANR diagnostic with retained Android trace stream, background main-stack sampler and phase timestamps",
+    "apk_sha256": "f760ed2186dfb60b2528da3363893f8b865237aeec4e54cb580ca391642d7969",
+    "recovery_commit": "9326a1bddbe51af7fafc84e7179db8d1147a695b",
+    "caveat": "Diagnostic-only predecessor. Current sources in this commit include later 500ms sampling and deadlock correction; not an exact z1S9S64v source tree."
+  },
+  {
+    "build": "CFH18AoO",
+    "change": "ChatGPT source hardening plus external-service routing deadlock correction and expanded diagnostics",
+    "apk_sha256": "5b1d076595c68dd492e68125e69c73efc5b601f487dd1726388f994e83374b31",
+    "recovery_commit": "9326a1bddbe51af7fafc84e7179db8d1147a695b",
+    "caveat": "Corrected build awaiting physical-device validation, not a verified working release."
   }
 ]

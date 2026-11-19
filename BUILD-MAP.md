@@ -11,4 +11,9 @@ These are reconstruction commits created after APK delivery, not original-time b
 | 3Y1CLQKd | reuse verified host process SslGuard, superseded strict-order variant | `3c75b12f52a108e31bd171f8b74a2df6a4f911b0` | `edb6b98d40d5b28869ad015e183d3bc59f39c05bde90dd664232a1dd10b34b6e` |
 | BqoDF89d | reuse initialized host SslGuard at any installed position | `07fcf61df052bfaaaba8b523ad1df4ee2cf40038` | `ab391188413a2596db00e71d018094d157a3e7f180c4193dda61078d585ef5ae` |
 
-Latest delivered: BqoDF89d. Application startup ANR remains open. No successful full Library/login/playback claim.
+## Later diagnostic and corrected builds
+
+- z1S9S64v: diagnostic-only predecessor, SHA256 `f760ed2186dfb60b2528da3363893f8b865237aeec4e54cb580ca391642d7969`. The current source is a later evolution, not an exact source tree for that binary.
+- CFH18AoO: ChatGPT source hardening plus targeted external-service unbind deadlock correction. Source commit `9326a1bddbe51af7fafc84e7179db8d1147a695b`. SHA256 `5b1d076595c68dd492e68125e69c73efc5b601f487dd1726388f994e83374b31`.
+
+Latest delivered: CFH18AoO. See BUILD-CFH18AoO.md. Physical-device validation remains open; no successful full Library/login/playback claim.
