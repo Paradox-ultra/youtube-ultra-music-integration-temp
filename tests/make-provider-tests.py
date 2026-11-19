@@ -1,0 +1,30 @@
+from pathlib import Path
+r=Path('/tmp/ultra-selftest/provider-unit/src');r.mkdir(parents=True,exist_ok=True)
+files={
+'android/content/Context.java':'''package android.content;public class Context{public String getPackageName(){return "test";}}''',
+'android/content/ContentProvider.java':'''package android.content;public class ContentProvider{public int attaches;public void attachInfo(Context c,android.content.pm.ProviderInfo p){attaches++;}}''',
+'android/content/pm/ProviderInfo.java':'''package android.content.pm;public class ProviderInfo{public String name,authority,packageName;public int initOrder;public boolean grantUriPermissions;public Object metaData;public ProviderInfo(){}public ProviderInfo(ProviderInfo x){name=x.name;authority=x.authority;packageName=x.packageName;initOrder=x.initOrder;metaData=x.metaData;}}''',
+'android/content/pm/PackageInfo.java':'''package android.content.pm;public class PackageInfo{public ProviderInfo[] providers;}''',
+'android/content/pm/PackageManager.java':'''package android.content.pm;public class PackageManager{public static final int GET_PROVIDERS=8,GET_META_DATA=128;public static class NameNotFoundException extends Exception{}public PackageInfo info;public PackageInfo getPackageInfo(String n,int f){return info;}}''',
+'com/tencent/shadow/core/runtime/PluginManifest.java':'''package com.tencent.shadow.core.runtime;public interface PluginManifest{public class ProviderInfo{public String className,authorities;public boolean grantUriPermissions;public ProviderInfo(String n,String a){className=n;authorities=a;}}}''',
+'com/tencent/shadow/core/loader/infos/PluginParts.java':'''package com.tencent.shadow.core.loader.infos;import android.content.*;import android.content.pm.*;public class PluginParts{public interface Factory{ContentProvider instantiateProvider(ClassLoader c,String n);}public Factory factory;public ClassLoader loader;public PackageManager manager;public PluginParts(Factory f,PackageManager p){factory=f;manager=p;loader=getClass().getClassLoader();}public Factory getAppComponentFactory(){return factory;}public ClassLoader getClassLoader(){return loader;}public PackageManager getPluginPackageManager(){return manager;}}''',
+'bghx.java':'''public class bghx{public static Object a=new Object();public static bghx b;public Object c;}''',
+'ProviderHarness.java':'''import java.util.*;import android.content.*;import android.content.pm.*;import com.tencent.shadow.core.loader.infos.PluginParts;import com.tencent.shadow.core.runtime.PluginManifest;import paradox.music.nativeui.NativeMusicProviders;
+public class ProviderHarness{
+ static List<String> order=new ArrayList<>();static int constructs;static String fail;static boolean reenter;
+ static Object owner=new Object();static Context ctx=new Context();static Map<String,ContentProvider> map=new HashMap<>();static List<PluginManifest.ProviderInfo> infos;static PluginParts parts;
+ static PluginManifest.ProviderInfo info(String n,String a){return new PluginManifest.ProviderInfo(n,a);}
+ static void call(){NativeMusicProviders.create(owner,ctx,"music",parts,infos,map);}
+ static void reset(){owner=new Object();map=new HashMap<>();constructs=0;order.clear();fail=null;reenter=false;PackageManager p=new PackageManager();p.info=new PackageInfo();p.info.providers=new ProviderInfo[0];parts=new PluginParts((cl,n)->{constructs++;return new ContentProvider(){public void attachInfo(Context c,ProviderInfo pi){super.attachInfo(c,pi);order.add(n);if(reenter){reenter=false;call();}if(n.equals(fail))throw new IllegalStateException("MlKitContext is already initialized");}};},p);}
+ public static void main(String[] args){
+ reset();infos=Arrays.asList(info("one","a;b"),info("one","a;b"),info("two","c"));call();call();if(constructs!=2||map.get("a")!=map.get("b")||map.get("a").attaches!=1)throw new AssertionError("dedupe/alias");System.out.println("PASS duplicate entries + repeated calls create/attach each provider once; alias identity");
+ reset();infos=Arrays.asList(info("one","a"),info("two","b"));ProviderInfo high=new ProviderInfo();high.name="two";high.initOrder=99;parts.manager.info.providers=new ProviderInfo[]{high};call();if(!order.toString().equals("[two, one]"))throw new AssertionError(order);System.out.println("PASS manifest initOrder preserved");
+ reset();String ml="com.google.mlkit.common.internal.MlKitInitProvider";infos=Arrays.asList(info(ml,"ml"));fail=ml;bghx.b=new bghx();bghx.b.c=new Object();call();call();if(constructs!=1||map.get("ml")==null)throw new AssertionError("benign singleton");System.out.println("PASS exact MLKit already-initialized with component runtime is retained once");
+ reset();infos=Arrays.asList(info(ml,"ml"));fail=ml;bghx.b=new bghx();boolean threw=false;try{call();}catch(RuntimeException e){threw=true;}if(!threw||!map.isEmpty())throw new AssertionError("partial singleton swallowed");try{call();}catch(RuntimeException e){}if(constructs!=1)throw new AssertionError("failed provider retried");System.out.println("PASS partial MLKit stays failure; terminal failure cached, not run twice");
+ reset();infos=Arrays.asList(info("ordinary","a"));fail="ordinary";threw=false;try{call();}catch(RuntimeException e){threw=true;}if(!threw)throw new AssertionError("broad swallowing");System.out.println("PASS same message from unrelated provider not swallowed");
+ reset();infos=Arrays.asList(info("one","a"),info("two","a"));threw=false;try{call();}catch(RuntimeException e){threw=true;}if(!threw||constructs!=1)throw new AssertionError("collision");System.out.println("PASS authority collision rejected before second create");
+ reset();infos=Arrays.asList(info("one","a"));reenter=true;threw=false;try{call();}catch(RuntimeException e){threw=true;}if(!threw||constructs!=1)throw new AssertionError("reentry");System.out.println("PASS reentrant startup blocked without duplicate create");
+ }
+}'''}
+for n,s in files.items():p=r/n;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(s)
+Path('/tmp/ultra-selftest/provider-unit/files.txt').write_text('\n'.join(map(str,r.rglob('*.java')))+'\n/tmp/music-native-loader/src/paradox/music/nativeui/NativeMusicProviders.java')
