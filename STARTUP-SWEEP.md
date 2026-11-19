@@ -27,3 +27,13 @@ This is not a claim that every possible defect is fixed. The phone's later ANR s
 ## Runtime validation
 
 Physical Android 16 ARM64 validation is pending. No real account login, selected Library, playback, phone installation or full second-process-launch success is claimed by these static/unit checks.
+
+## Physical test attempts and delivery
+
+The unchanged candidate was made available as ZDfc80OT, SHA256 as above. It is not phone-tested.
+
+First physical Android 16 ARM64 Pixel 10 run: the instrumentation logged the device information, then Android killed the host for a package-change event during its clean-device intro before the host-launch checkpoint. The missing normal MicroG prerequisite was also logged, but is not established as the kill cause. No successful Music lifecycle claim follows.
+
+Second run added the official normal MicroG prerequisite and used the isolated startup fixture in `tests/java/StartupInstrumentationIsolated.java.txt`, deferring the launcher. Test Lab retried automatically three times and terminated with infrastructure Internal System Error 3, gcloud exit 20. That is not a test pass or a diagnosed production failure. Further Test Lab submissions were stopped.
+
+No real account login, selected Library, playback, full host startup/recreation or second-process launch is verified by these attempts. The crash reporter remains included. Raw device logs, results and transfers are excluded from this public source repository.

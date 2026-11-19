@@ -21,3 +21,7 @@ Latest delivered: CFH18AoO. See BUILD-CFH18AoO.md. Physical-device validation re
 ## Recovery build uoLJT42y
 
 Source `609fafe00243b1bf9a4f8144f40ac85e49119769`; SHA256 `8ccd3edce93ec7c81186e26c61c30fca668b53d4160117731570421faec31349`. Latest delivered diagnostic/recovery build, not a verified working release. See BUILD-uoLJT42y.md.
+
+## Combined startup candidate ZDfc80OT
+
+SHA256 `1851afb41cbf04aea27f8025cb4805fc3e1c873809a6d03eefae2def4ee861f3`. Production source commit `99f0df2edd7695bfce9615fd39e82883855f28c6`. Released with the explicit not-phone-tested caveat. See STARTUP-SWEEP.md for static tests and inconclusive physical test attempts.

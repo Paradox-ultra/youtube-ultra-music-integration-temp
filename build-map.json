@@ -57,9 +57,9 @@
     "caveat": "Diagnostic/recovery build. First-launch crash cause unknown; physical-device behavior not verified."
   },
   {
-    "build": "startup-sweep-candidate",
+    "build": "ZDfc80OT",
     "change": "bounded diagnostic rendering, process recovery, lifecycle dispatch/once guard, ABI/cache validation",
     "apk_sha256": "1851afb41cbf04aea27f8025cb4805fc3e1c873809a6d03eefae2def4ee861f3",
-    "caveat": "Candidate withheld pending Android runtime validation; not a successful phone or account/playback claim."
+    "caveat": "Released as not phone-tested. Physical Test Lab attempts inconclusive/infrastructure-failed; static and synthetic checks only."
   }
 ]
