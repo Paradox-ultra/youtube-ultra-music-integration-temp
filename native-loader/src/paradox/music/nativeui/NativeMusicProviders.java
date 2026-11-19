@@ -34,7 +34,9 @@ public final class NativeMusicProviders {
     android.content.pm.ProviderInfo manifest=details.get(info.className);
     android.content.pm.ProviderInfo platform=manifest==null?new android.content.pm.ProviderInfo():new android.content.pm.ProviderInfo(manifest);
     platform.packageName=context.getPackageName();platform.name=info.className;platform.authority=info.authorities;platform.grantUriPermissions=info.grantUriPermissions;
+    NativeMusicStartupTrace.event("provider attach begin: "+info.className);
     try{provider.attachInfo(context,platform);}catch(Throwable error){if(!benignMlKit(info.className,error,parts.getClassLoader()))throw error;}
+    NativeMusicStartupTrace.event("provider attach end: "+info.className);
     publish(providers,info,provider);record.complete=true;
    }catch(Throwable error){record.failure=error;throw failure(part,info,error);}
   }

@@ -1,1 +1,1 @@
-ANR timing instrumentation under development. Not part of BqoDF89d. Captures elapsed phases and off-main stack snapshots to diagnose stalls while respecting the donor's required main-thread Application startup. Not compiled or phone-verified at publication. No automatic heavyweight Application preload is enabled.
+Historical pre-delivery ANR timing drafts. These files are retained only for recovery and are superseded by compiled native-loader/src diagnostics in z1S9S64v and CFH18AoO. Do not compile this folder with current sources. No device logs are included.

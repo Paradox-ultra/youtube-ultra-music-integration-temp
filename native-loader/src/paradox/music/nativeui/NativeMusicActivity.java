@@ -252,7 +252,9 @@ public final class NativeMusicActivity extends Activity {
         MAIN.post(() -> {
             Thread.UncaughtExceptionHandler previous = Thread.getDefaultUncaughtExceptionHandler();
             try {
+                NativeMusicStartupTrace.event("Application main-thread lifecycle begin");
                 target.callApplicationOnCreate("music");
+                NativeMusicStartupTrace.event("Application main-thread lifecycle end");
                 synchronized (LOCK) {
                     applicationCreated = true;
                 }

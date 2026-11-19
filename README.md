@@ -4,7 +4,7 @@ Experimental source/patch recovery. This repository does not claim that Music Li
 
 ## Current source state
 
-The latest documented delivered APK is BqoDF89d. The test device has an unresolved Music Application startup ANR. See [BUILD-MAP.md](BUILD-MAP.md), [REBUILD.md](REBUILD.md), and [UPSTREAM.md](UPSTREAM.md).
+The latest documented delivered APK is CFH18AoO, incorporating ChatGPT commit 23673b0, current diagnostics and a targeted external-service routing deadlock correction. Physical-device validation of that correction, selected-account Library and playback remains open. See [BUILD-MAP.md](BUILD-MAP.md), [REBUILD.md](REBUILD.md), and [UPSTREAM.md](UPSTREAM.md).
 
 The source hardening patch dated 2026-11-19 removes a loader lock held across main-thread plugin Application startup and makes extraction recovery more defensive. This is not a validated ANR fix. Android Application lifecycle callbacks still execute on the main thread; moving Application.onCreate to a worker thread would be unsafe.
 

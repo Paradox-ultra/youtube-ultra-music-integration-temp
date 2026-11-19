@@ -1,0 +1,1 @@
+package com.tencent.shadow.core.runtime;import android.content.*;public class SubDirContextThemeWrapper{public int externalBinds,externalUnbinds;public boolean bindService(Intent i,ServiceConnection c,int flags){externalBinds++;return flags!=99;}public void unbindService(ServiceConnection c){externalUnbinds++;}}
