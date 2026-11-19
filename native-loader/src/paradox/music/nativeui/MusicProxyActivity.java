@@ -1,6 +1,7 @@
 package paradox.music.nativeui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ScrollView;
@@ -28,6 +29,19 @@ public class MusicProxyActivity extends PluginContainerActivity {
 
     @Override
     public void onCreate(Bundle b) {
+        NativeMusicDiagnostics.install(getApplicationContext());
+        if (!NativeMusicActivity.isApplicationReady()) {
+            startupFailed = true;
+            NativeMusicDiagnostics.recoveryNote("Cold Music activity restored before its loader was ready; returning to Ultra");
+            superOnCreate(null);
+            Intent home = getPackageManager().getLaunchIntentForPackage(getPackageName());
+            if (home != null) {
+                home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(home);
+            }
+            finish();
+            return;
+        }
         try {
             NativeMusicDiagnostics.phase("Music activity onCreate");
             super.onCreate(b);

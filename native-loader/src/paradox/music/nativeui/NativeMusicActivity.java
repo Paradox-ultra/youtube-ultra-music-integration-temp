@@ -50,7 +50,8 @@ public final class NativeMusicActivity extends Activity {
     private static final AtomicBoolean OPENING = new AtomicBoolean(false);
 
     private static MusicPluginLoader loader;
-    private static boolean applicationCreated;
+    private static volatile boolean applicationCreated;
+    public static boolean isApplicationReady() { return applicationCreated; }
     private static boolean loggerReady;
     private static volatile String phase = "starting";
 
