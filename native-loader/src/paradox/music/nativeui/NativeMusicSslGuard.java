@@ -15,7 +15,8 @@ public final class NativeMusicSslGuard {
    synchronized(lock){
     if(Class.forName("uuy",false,host).getField("b").get(null)!=existing)throw new IllegalStateException("SslGuard provider state differs from installed provider");
     Provider[] providers=Security.getProviders();
-    if(providers.length==0||providers[0]!=existing)throw new IllegalStateException("Ultra SslGuard is not at top priority");
+    boolean installed=false;for(Provider provider:providers)if(provider==existing){installed=true;break;}
+    if(!installed)throw new IllegalStateException("Ultra SslGuard is no longer installed");
     if(Class.forName("akpm",false,host).getField("c").get(null)==null)throw new IllegalStateException("Ultra SslGuard has no initialization context");
     for(String name:new String[]{"uve","uvd"})if(Class.forName(name,false,host).getField("a").get(null)==null)throw new IllegalStateException("Ultra SslGuard callback missing: "+name);
     Class<?> spi=Class.forName("uuz",false,host);
