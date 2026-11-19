@@ -39,3 +39,8 @@ SHA256 `0dc0af16e0cf1a6bd1bd11826ab8996371f7edc1e7803e0800bc470fd45bc64a`. Share
 ## Component Application context candidate hw7HHz9a
 
 SHA256 `09f67ca0848af09ccbf4e0875287714ca6235f4a6469bc875b1cc109b9894ed8`. Injected Activity base and service attach expose owning plugin Application. Provider and receiver paths audited. Not phone-tested. See COMPONENT-APPLICATION-CONTEXT.md.
+
+
+## Packed-resource startup sweep hwuRbsh9
+
+SHA256 `576f7f74f553cbdc5be4f862ea460555990ede77c6b4f3dbb8aba7388b79b84b`. Corrects 250 resource IDs in the two missed encoded AppCompat arrays. Exact method/instruction delta checked, broader startup paths reviewed. Not phone-tested. See PACKED-RESOURCE-STARTUP-SWEEP.md.
