@@ -17,3 +17,7 @@ These are reconstruction commits created after APK delivery, not original-time b
 - CFH18AoO: ChatGPT source hardening plus targeted external-service unbind deadlock correction. Source commit `9326a1bddbe51af7fafc84e7179db8d1147a695b`. SHA256 `5b1d076595c68dd492e68125e69c73efc5b601f487dd1726388f994e83374b31`.
 
 Latest delivered: CFH18AoO. See BUILD-CFH18AoO.md. Physical-device validation remains open; no successful full Library/login/playback claim.
+
+## Recovery build uoLJT42y
+
+Source `609fafe00243b1bf9a4f8144f40ac85e49119769`; SHA256 `8ccd3edce93ec7c81186e26c61c30fca668b53d4160117731570421faec31349`. Latest delivered diagnostic/recovery build, not a verified working release. See BUILD-uoLJT42y.md.
