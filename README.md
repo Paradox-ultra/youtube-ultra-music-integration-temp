@@ -25,3 +25,7 @@ A full clean-room build from a Git clone has not been demonstrated. Supply the o
 Before distributing an APK, verify signatures, DEX references, providers, account selection, Library rendering, playback controls, media session, background playback, process restarts and Android-version compatibility on physical devices.
 
 See [SOURCE-HARDENING-2026-11-19.md](SOURCE-HARDENING-2026-11-19.md) for source changes and verification limits.
+
+## Combined startup sweep
+
+See [STARTUP-SWEEP.md](STARTUP-SWEEP.md) for the current changes, verification and runtime limits.

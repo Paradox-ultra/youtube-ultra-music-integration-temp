@@ -13,10 +13,12 @@ The final delivered build has package app.paradox.youtubeintegrated, label YouTu
 3. Compile bdbl with PatchSslListener.java, D8 that one class, remove its old class definition with ReplaceDexClass.java, and append the replacement as a new DEX. This avoids exceeding the original DEX method-ID limit. Never retain duplicate bdbl definitions.
 4. Compile all native-loader/src Java against the Shadow runtime and android.jar. Assemble the core jars, shade Kotlin, apply PatchPackageInfoAdapter, PatchDiagnosticExits and PatchProviderManager in that order. For CFH18AoO, compile the included current diagnostics and NativeMusicServiceConnections helper, then apply PatchExternalServiceRouting to the final host jar before D8 at min API 26. This patches two successful framework-bind routes and the matching direct framework-unbind route without changing plugin service lifecycle. D8 the result at min API 26.
 5. Replace only classes15.dex and, when needed, assets/ultra_music/music.apk in the prior signed integration APK. Drop old signature entries, keep resources.arsc uncompressed, zipalign with 16 KB native alignment, and sign with a locally supplied key. Never embed signing material in the repository.
+For the combined startup sweep, apply `PatchStartupSweep` after step 4, before D8. It requires the newly compiled NativeMusicMainThread helper. Preserve all earlier ShadowContext instrumentation.
+
 6. Verify v2/v3 signatures, stored/aligned resources, manifest/name/package, changed ZIP entries, duplicate classes, DEX references and relevant JVM/ART fixtures.
 
 Development path names in legacy scripts are not portable defaults. Compile.java invokes the JDK compiler when a separate javac binary is unavailable. Build tools and SDK/Shadow jars must be supplied in the documented layout or paths adapted.
 
 ## Verification limits
 
-Synthetic fixtures and ART load/reflection do not prove Android application startup, JNI execution, UI rendering, account handoff or playback. The latest build passed earlier signature/reference/provider/guard failures but now has a startup ANR. Do not publish an APK from this repository as a working finished product without Android runtime verification.
+Synthetic fixtures and ART load/reflection do not prove Android application startup, JNI execution, UI rendering, account handoff or playback. The earlier startup ANRs have separate source-grounded fixes in the combined startup candidate. See STARTUP-SWEEP.md for its current evidence and runtime limits. Do not publish an APK from this repository as a working finished product without Android runtime verification.

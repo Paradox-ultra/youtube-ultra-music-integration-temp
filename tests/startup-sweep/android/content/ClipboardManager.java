@@ -1,0 +1,1 @@
+package android.content;public class ClipboardManager{public static String copied;public void setPrimaryClip(ClipData c){copied=c.value;}}

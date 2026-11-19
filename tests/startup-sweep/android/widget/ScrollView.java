@@ -1,0 +1,1 @@
+package android.widget;public class ScrollView{public TextView view;public ScrollView(android.app.Activity a){}public void addView(TextView v){view=v;}}

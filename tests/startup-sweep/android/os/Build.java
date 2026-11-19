@@ -1,0 +1,1 @@
+package android.os;public class Build {public static String[] SUPPORTED_ABIS={"armeabi-v7a","arm64-v8a"},SUPPORTED_64_BIT_ABIS={"arm64-v8a"},SUPPORTED_32_BIT_ABIS={"armeabi-v7a"};public static class VERSION{public static int SDK_INT=36;}}

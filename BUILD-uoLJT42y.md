@@ -12,3 +12,5 @@ The preceding phone build crashed on first launch, then did not open on second l
 Verified: Android compilation; two-process early crash/recovery/Copy fixture; previous diagnostic fixtures; ART host 1,136 total and 1,135 load/reflect with the same unused NativeActivity missing-class baseline; v2/v3 signatures with unchanged signer; ZIP CRC; stored resources.arsc and 16 KB alignment; upload size and MD5.
 
 These checks do not prove physical-device installation, startup, selected-account Library or playback. The exact cause of the reported first and second phone failures remains unverified pending the actual exception/report.
+
+Later evidence: the subsequent complete ANR report identified selectable diagnostic-text rendering as the first-launch ANR, while GoogleApiHandler was idle. See STARTUP-SWEEP.md. The recovery APK still carried the older oversized dialog.

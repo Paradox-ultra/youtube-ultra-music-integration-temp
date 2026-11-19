@@ -1,0 +1,1 @@
+package android.os;public class Process {public static boolean is64Bit(){return true;}public static int myPid(){return 1;}public static void killProcess(int x){}}

@@ -51,6 +51,7 @@ public final class NativeMusicActivity extends Activity {
 
     private static MusicPluginLoader loader;
     private static volatile boolean applicationCreated;
+    private static java.util.concurrent.FutureTask<Void> applicationStartup;
     public static boolean isApplicationReady() { return applicationCreated; }
     private static boolean loggerReady;
     private static volatile String phase = "starting";
@@ -154,7 +155,7 @@ public final class NativeMusicActivity extends Activity {
             String stamp = buildHostStamp(context);
             File marker = new File(dir, ".ready_" + stamp);
 
-            if (!marker.exists() || !apk.isFile() || !lib.isDirectory()) {
+            if (!marker.exists() || !apk.isFile() || !lib.isDirectory() || !nativeCacheValid(apk,lib)) {
                 cleanOldMarkers(dir);
                 File tmpApk = new File(dir, "music.apk.tmp");
                 try (InputStream in = context.getAssets().open(ASSET_APK);
@@ -184,6 +185,8 @@ public final class NativeMusicActivity extends Activity {
             return new ExtractedPaths(dir, apk, lib);
         }
     }
+
+    private static boolean nativeCacheValid(File apk,File lib){try(ZipFile zip=new ZipFile(apk)){String prefix=selectAbiPrefix(zip);int count=0;Enumeration<? extends ZipEntry> entries=zip.entries();while(entries.hasMoreElements()){ZipEntry e=entries.nextElement();if(e.getName().startsWith(prefix)&&e.getName().endsWith(".so")){File f=new File(lib,new File(e.getName()).getName());if(!f.isFile()||f.length()!=e.getSize()||!f.canRead()||!f.canExecute())return false;count++;}}return count>0;}catch(IOException invalid){return false;}}
 
     private static boolean deleteRecursively(File file) {
         if (file == null || !file.exists()) return true;
@@ -240,42 +243,22 @@ public final class NativeMusicActivity extends Activity {
     }
 
     private static void ensureApplicationCreated(MusicPluginLoader target) throws Exception {
-        // Do not hold LOCK while Android's main thread runs plugin Application.onCreate().
-        // Plugin startup can call host/plugin callbacks which may need loader state.
+        java.util.concurrent.FutureTask<Void> task; boolean post=false;
         synchronized (LOCK) {
             if (applicationCreated) return;
-        }
-
-        phase = "Music application attach, providers and onCreate";
-        NativeMusicDiagnostics.phase(phase);
-        final Throwable[] startupFailure = new Throwable[1];
-        CountDownLatch done = new CountDownLatch(1);
-        MAIN.post(() -> {
-            Thread.UncaughtExceptionHandler previous = Thread.getDefaultUncaughtExceptionHandler();
-            try {
-                NativeMusicStartupTrace.event("Application main-thread lifecycle begin");
-                target.callApplicationOnCreate("music");
-                NativeMusicStartupTrace.event("Application main-thread lifecycle end");
-                synchronized (LOCK) {
-                    applicationCreated = true;
-                }
-            } catch (Throwable error) {
-                startupFailure[0] = error;
-            } finally {
-                if (Thread.getDefaultUncaughtExceptionHandler() != previous) {
-                    Thread.setDefaultUncaughtExceptionHandler(previous);
-                }
-                done.countDown();
+            if(applicationStartup==null){
+                applicationStartup=new java.util.concurrent.FutureTask<>(()->{
+                    Thread.UncaughtExceptionHandler prior=Thread.getDefaultUncaughtExceptionHandler();
+                    try {NativeMusicStartupTrace.event("Application main-thread lifecycle begin");target.callApplicationOnCreate("music");applicationCreated=true;NativeMusicStartupTrace.event("Application main-thread lifecycle end");return null;}
+                    finally {if(Thread.getDefaultUncaughtExceptionHandler()!=prior)Thread.setDefaultUncaughtExceptionHandler(prior);}
+                });post=true;
             }
-        });
-
-        if (!done.await(60, TimeUnit.SECONDS)) {
-            throw new IllegalStateException(
-                "Music application startup timed out after 60 seconds; inspect startup diagnostics");
+            task=applicationStartup;
         }
-        if (startupFailure[0] != null) {
-            throw new Exception("Music application startup failed", startupFailure[0]);
-        }
+        phase="Music application attach, providers and onCreate";NativeMusicDiagnostics.phase(phase);
+        if(post&&!MAIN.post(task)){task.cancel(false);throw new IllegalStateException("Main looper rejected Music Application startup");}
+        try{task.get(60,TimeUnit.SECONDS);}catch(java.util.concurrent.ExecutionException failed){throw new Exception("Music application startup failed; initialization will not be repeated in this process",failed.getCause());}
+        catch(InterruptedException interrupted){Thread.currentThread().interrupt();throw interrupted;}
     }
 
     private static void extractNativeLibs(File apk, File libDir) throws IOException {
@@ -304,8 +287,8 @@ public final class NativeMusicActivity extends Activity {
         }
     }
 
-    private static String selectAbiPrefix(ZipFile zip) {
-        for (String abi : Build.SUPPORTED_ABIS) {
+    private static String selectAbiPrefix(ZipFile zip) throws IOException {
+        for (String abi : (android.os.Process.is64Bit() ? Build.SUPPORTED_64_BIT_ABIS : Build.SUPPORTED_32_BIT_ABIS)) {
             String candidate = "lib/" + abi + "/";
             Enumeration<? extends ZipEntry> entries = zip.entries();
             while (entries.hasMoreElements()) {
@@ -313,7 +296,7 @@ public final class NativeMusicActivity extends Activity {
                 if (name.startsWith(candidate) && name.endsWith(".so")) return candidate;
             }
         }
-        return null;
+        throw new IOException("Embedded Music has no native libraries for this process ABI");
     }
 
     private static String buildHostStamp(Context context) {

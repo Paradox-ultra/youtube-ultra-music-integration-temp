@@ -1,0 +1,1 @@
+package android.widget;public class TextView{public String text;public TextView(android.app.Activity a){}public void setText(String s){text=s;}public void setTextSize(int s){}public void setPadding(int a,int b,int c,int d){}public void setTextIsSelectable(boolean x){}}

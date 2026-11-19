@@ -1,0 +1,1 @@
+package android.webkit;public class WebView {public static int created,destroyed;public WebView(android.content.Context c){created++;}public void destroy(){destroyed++;}}

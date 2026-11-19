@@ -1,0 +1,1 @@
+package paradox.music.nativeui;public class MusicPluginLoader {public static int count;public static boolean fail;public void callApplicationOnCreate(String s){count++;if(fail)throw new IllegalStateException("expected startup failure");}}

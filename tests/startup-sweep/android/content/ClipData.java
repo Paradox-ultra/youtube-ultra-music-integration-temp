@@ -1,0 +1,1 @@
+package android.content; public class ClipData{public String value;public static ClipData newRawUri(String s,android.net.Uri u){return new ClipData();}public static ClipData newPlainText(String l,String t){ClipData x=new ClipData();x.value=t;return x;}}
