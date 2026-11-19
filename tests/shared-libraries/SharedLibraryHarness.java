@@ -1,0 +1,11 @@
+import java.io.*;import java.net.*;import com.tencent.shadow.core.loader.classloaders.PluginClassLoader;
+public class SharedLibraryHarness{
+ static String androidJar; static PluginClassLoader loader(String jar,String[] whitelist)throws Exception{return new PluginClassLoader(jar,null,null,SharedLibraryHarness.class.getClassLoader(),new URLClassLoader(new URL[]{new File(androidJar).toURI().toURL()},ClassLoader.getPlatformClassLoader()),whitelist);}
+ public static void main(String[]a)throws Exception{
+   androidJar=a[2]; String jar=a[0]; boolean oldFailed=false;try{Class.forName("awuh",false,loader(jar,new String[]{"paradox.music.nativeui"}));}catch(LinkageError|ClassNotFoundException expected){oldFailed=true;System.out.println("EXPECTED OLD FAILURE "+expected);}if(!oldFailed)throw new AssertionError("old loader unexpectedly resolved");
+   PluginClassLoader fixed=loader(jar,java.nio.file.Files.readAllLines(java.nio.file.Paths.get(a[1])).toArray(new String[0]));
+   Class<?> c=Class.forName("awuh",false,fixed); if(c.getClassLoader()!=fixed)throw new AssertionError("awuh lost plugin ownership");if(c.getInterfaces().length!=1||!c.getInterfaces()[0].getName().equals("org.apache.http.protocol.HttpRequestHandler")||c.getInterfaces()[0].getClassLoader()!=SharedLibraryHarness.class.getClassLoader())throw new AssertionError("interface did not resolve from app");c.getDeclaredConstructors();c.getDeclaredMethods();
+   for(String n:new String[]{"org.apache.http.Header","org.apache.http.protocol.HttpRequestHandler","androidx.window.extensions.WindowExtensionsProvider","androidx.window.sidecar.SidecarProvider","android.adservices.measurement.MeasurementManager"})if(fixed.loadClass(n)!=Class.forName(n))throw new AssertionError(n);
+   if(fixed.loadClass("java.lang.String")!=String.class)throw new AssertionError("boot routing");boolean rejected=false;try{fixed.loadClass("UnrelatedHostFixture");}catch(ClassNotFoundException expected){rejected=true;}if(!rejected)throw new AssertionError("host isolation widened");
+   System.out.println("PASS exact existing PluginClassLoader: before fails awuh; after resolves plugin awuh and app Apache interface; all shared-library families route; boot unchanged; unrelated host blocked");
+ }}

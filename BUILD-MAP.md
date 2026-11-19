@@ -44,3 +44,8 @@ SHA256 `09f67ca0848af09ccbf4e0875287714ca6235f4a6469bc875b1cc109b9894ed8`. Injec
 ## Packed-resource startup sweep hwuRbsh9
 
 SHA256 `576f7f74f553cbdc5be4f862ea460555990ede77c6b4f3dbb8aba7388b79b84b`. Corrects 250 resource IDs in the two missed encoded AppCompat arrays. Exact method/instruction delta checked, broader startup paths reviewed. Not phone-tested. See PACKED-RESOURCE-STARTUP-SWEEP.md.
+
+
+## Shared-library routing pwoHvhfX
+
+SHA256 `eab95ea30ee457455a53baa0a00e8f19956817e6f023ea8df24e3baeeec9ad7d`. Routes the four already-declared shared-library package families through the app loader. No donor class was missing. Current source reproduces the whitelist and marker used in classes15.dex. Not phone-tested. See SHARED-LIBRARY-CLASS-AUDIT.md.

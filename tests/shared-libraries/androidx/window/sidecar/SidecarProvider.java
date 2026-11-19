@@ -1,0 +1,1 @@
+package androidx.window.sidecar;public class SidecarProvider {}

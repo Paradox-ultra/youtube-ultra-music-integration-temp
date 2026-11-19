@@ -67,5 +67,18 @@
     "change": "default-package classloader fast path and per-attempt last-sample/Library-ready timing",
     "apk_sha256": "dd3581ae164de25f88b4fcac17147d56f6cfeceb982b5a34d4cc780aed4ca921",
     "caveat": "Not phone-tested. No measured speed, real-account, playback or localized readiness claim."
+  },
+  {
+    "build": "hwuRbsh9",
+    "change": "Rebase 250 encoded styleable resource IDs, preserve donor themes",
+    "apk_sha256": "576f7f74f553cbdc5be4f862ea460555990ede77c6b4f3dbb8aba7388b79b84b",
+    "source_commit": "cce5a8b88842a8f2a8bed1748d7ff107efc2b26f",
+    "caveat": "Not phone-tested at delivery; subsequent test passed theme check and exposed dependency routing failure."
+  },
+  {
+    "build": "pwoHvhfX",
+    "change": "Restore manifest-declared shared-library visibility through the host app loader; no donor classes dropped",
+    "apk_sha256": "eab95ea30ee457455a53baa0a00e8f19956817e6f023ea8df24e3baeeec9ad7d",
+    "caveat": "Not phone-tested. Reproduced classloader regression passes; no Library/auth/playback or UI proof."
   }
 ]

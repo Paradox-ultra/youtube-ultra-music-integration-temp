@@ -1,0 +1,1 @@
+package androidx.window.extensions;public class WindowExtensionsProvider {}

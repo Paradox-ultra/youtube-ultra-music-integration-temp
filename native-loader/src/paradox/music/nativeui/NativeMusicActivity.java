@@ -217,7 +217,12 @@ public final class NativeMusicActivity extends Activity {
             Parcel parcel = Parcel.obtain();
             try {
                 new LoadParameters("ultra_native_music", "music", null,
-                    new String[]{"paradox.music.nativeui"}).writeToParcel(parcel, 0);
+                    new String[]{"paradox.music.nativeui",
+                        // Manifest-declared shared libraries live on the app loader, not its boot parent.
+                        "org.apache.http", "org.apache.http.**",
+                        "androidx.window.extensions", "androidx.window.extensions.**",
+                        "androidx.window.sidecar", "androidx.window.sidecar.**",
+                        "android.adservices", "android.adservices.**"}).writeToParcel(parcel, 0);
                 params = parcel.marshall();
             } finally {
                 parcel.recycle();

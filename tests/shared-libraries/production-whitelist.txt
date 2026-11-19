@@ -1,0 +1,9 @@
+paradox.music.nativeui
+org.apache.http
+org.apache.http.**
+androidx.window.extensions
+androidx.window.extensions.**
+androidx.window.sidecar
+androidx.window.sidecar.**
+android.adservices
+android.adservices.**

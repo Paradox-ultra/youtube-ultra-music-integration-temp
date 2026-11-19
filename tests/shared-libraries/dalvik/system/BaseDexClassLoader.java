@@ -1,0 +1,1 @@
+package dalvik.system; import java.net.*;import java.io.*;public class BaseDexClassLoader extends URLClassLoader{public BaseDexClassLoader(String path,File optimized,String lib,ClassLoader parent)throws Exception{super(new URL[]{new File(path).toURI().toURL()},parent);}}

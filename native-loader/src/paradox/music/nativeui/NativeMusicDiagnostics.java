@@ -32,7 +32,7 @@ public final class NativeMusicDiagnostics {
  }
  public static void begin(){shown=false;previous=null;attempt=Long.toString(System.currentTimeMillis());attemptStart=SystemClock.elapsedRealtime();libraryMs=-1;NativeMusicStartupTrace.begin();started=true;phase("Music button tapped");}
  public static void phase(String value){NativeMusicStartupTrace.event(value);phase=value;if(!started)return;persistAlive();}
- public static String attemptSummary(){return "Build: music-packed-resources-20261119\nAttempt: "+attempt+"\nTime: "+new Date()+"\nElapsed: "+(attemptStart==0?0:SystemClock.elapsedRealtime()-attemptStart)+"ms\nStartup phase: "+phase+"\nStart-to-Library-ready: "+(libraryMs<0?"NOT CONFIRMED":libraryMs+"ms")+"\n"+NativeMusicClassLoading.summary()+"\n";}
+ public static String attemptSummary(){return "Build: music-shared-libraries-20261119\nAttempt: "+attempt+"\nTime: "+new Date()+"\nElapsed: "+(attemptStart==0?0:SystemClock.elapsedRealtime()-attemptStart)+"ms\nStartup phase: "+phase+"\nStart-to-Library-ready: "+(libraryMs<0?"NOT CONFIRMED":libraryMs+"ms")+"\n"+NativeMusicClassLoading.summary()+"\n";}
  public static void heartbeat(){if(started)persistAlive();}
  private static void persistAlive(){final String snapshot=attemptSummary();STATE_IO.execute(()->{try{if(lastAttempt!=null)write(lastAttempt,snapshot);if(state!=null)write(state,snapshot);}catch(Throwable ignored){}});}
  public static void libraryReady(){libraryMs=SystemClock.elapsedRealtime()-attemptStart;phase("Library-ready: selected Library tab drawn with window focus");completed();}

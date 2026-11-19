@@ -1,0 +1,1 @@
+package android.adservices.measurement;public class MeasurementManager {}
