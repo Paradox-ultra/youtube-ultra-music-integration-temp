@@ -86,5 +86,11 @@
     "change": "Metadata-only Library request/auth/connectivity observation, all original donor operations preserved",
     "apk_sha256": "73b663951d54915a66dfe40a8ca00e43de6f451dd62a5611a4501e29494552f7",
     "caveat": "Network diagnostic, not a confirmed Library fix. Not phone-tested; no device request/status evidence yet."
+  },
+  {
+    "build": "vRzJkn1D",
+    "change": "Bounded native serialized request and HTTP400 category observations; no guessed repair",
+    "apk_sha256": "3fbca3954ee6462795e148d7a974b42f64db0aa52635e4e39694893a7be80cc2",
+    "caveat": "Diagnostic only. No on-device successful Library load or playback claimed."
   }
 ]

@@ -54,3 +54,8 @@ SHA256 `eab95ea30ee457455a53baa0a00e8f19956817e6f023ea8df24e3baeeec9ad7d`. Route
 ## Library network observation KvJfoSxD
 
 SHA256 `73b663951d54915a66dfe40a8ca00e43de6f451dd62a5611a4501e29494552f7`. Adds metadata-only request/auth/connectivity observation and error-state dialog. No source-confirmed root cause yet; this is not a claimed network fix. Not phone-tested. See NETWORK-OBSERVATION.md.
+
+
+## HTTP400 observation vRzJkn1D
+
+SHA256 `3fbca3954ee6462795e148d7a974b42f64db0aa52635e4e39694893a7be80cc2`. Combined bounded body/client/auth/scope/compression/visitor observation with matched browse statuses. No guessed repair. Not phone-tested. See HTTP400-OBSERVATION.md.
