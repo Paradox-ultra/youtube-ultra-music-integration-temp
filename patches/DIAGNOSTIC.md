@@ -1,0 +1,1 @@
+Caught launch failures are persisted with a full nested stack and displayed immediately on the resumed Activity through a scrollable selectable Copy dialog. Uncaught exceptions still delegate to the prior handler. Baseline source already includes this recovered code; this stage adds its fixture tests. Runtime UI verification is separate from fixture success.
