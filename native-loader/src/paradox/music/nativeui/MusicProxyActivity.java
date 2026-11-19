@@ -33,6 +33,7 @@ public class MusicProxyActivity extends PluginContainerActivity {
         NativeMusicDiagnostics.install(getApplicationContext());
         if (!NativeMusicActivity.isApplicationReady()) {
             startupFailed = true;
+            ultraDetachFailedActivity();
             NativeMusicDiagnostics.recoveryNote("Cold Music activity restored before its loader was ready; returning to Ultra");
             superOnCreate(null);
             Intent home = getPackageManager().getLaunchIntentForPackage(getPackageName());
@@ -50,10 +51,16 @@ public class MusicProxyActivity extends PluginContainerActivity {
             startupFailed = true;
             NativeMusicDiagnostics.capture("Caught Music activity onCreate failure",e);
             Log.e(TAG, "Music activity onCreate failed", e);
-            if (!superCreateCalled) {
-                superOnCreate(null);
+            // The original delegate failure must not be hidden by fallback callbacks.
+            ultraDetachFailedActivity();
+            try {
+                if (!superCreateCalled) superOnCreate(null);
+            } catch (Throwable recovery) {
+                if (recovery != e) e.addSuppressed(recovery);
             }
-            Toast.makeText(getApplicationContext(), "Music could not start", Toast.LENGTH_LONG).show();
+            NativeMusicDiagnostics.showCaught(getApplicationContext(), "Music activity initialization failed; recovery errors are suppressed below",e);
+            try { Toast.makeText(getApplicationContext(), "Music could not start; report saved", Toast.LENGTH_LONG).show(); }
+            catch (Throwable ignored) {}
             finish();
         }
     }

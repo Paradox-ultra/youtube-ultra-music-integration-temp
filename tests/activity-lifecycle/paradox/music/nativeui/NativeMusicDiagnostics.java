@@ -1,0 +1,1 @@
+package paradox.music.nativeui;public class NativeMusicDiagnostics{public static void phase(String s){}}

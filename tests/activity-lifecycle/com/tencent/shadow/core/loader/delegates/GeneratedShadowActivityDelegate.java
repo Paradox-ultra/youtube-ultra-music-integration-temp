@@ -1,0 +1,1 @@
+package com.tencent.shadow.core.loader.delegates;public class GeneratedShadowActivityDelegate{Object pluginActivity;}

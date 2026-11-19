@@ -29,3 +29,8 @@ SHA256 `1851afb41cbf04aea27f8025cb4805fc3e1c873809a6d03eefae2def4ee861f3`. Produ
 ## Positive service-ownership candidate 4tPo8XDE
 
 SHA256 `8ff64f6c4402ecbd17eb9c63ecb8e51dfb04a167e7fe9c437bc0a8433c2c8bb0`. Failed-bind framework cleanup bypasses plugin main-thread waits; targeted later thread snapshots added. Not phone-tested. See SERVICE-OWNERSHIP.md.
+
+
+## Lifecycle safety candidate Sp1KUXs2
+
+SHA256 `0dc0af16e0cf1a6bd1bd11826ab8996371f7edc1e7803e0800bc470fd45bc64a`. Shared nullable lifecycle observation, failed-delegate detachment and first-error preservation. Unknown primary initialization failure remains unverified. Not phone-tested. See ACTIVITY-LIFECYCLE-SAFETY.md.

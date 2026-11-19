@@ -1,0 +1,1 @@
+package com.tencent.shadow.core.runtime;import com.tencent.shadow.core.runtime.container.*;public class PluginActivity {Object mPluginApplication;static PluginActivity get(PluginContainerActivity a){Object o=a.getPluginActivity();return o!=null?(PluginActivity)o:new ShadowActivity();}}

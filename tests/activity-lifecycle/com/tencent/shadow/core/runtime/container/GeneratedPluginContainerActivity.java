@@ -1,0 +1,1 @@
+package com.tencent.shadow.core.runtime.container;public class GeneratedPluginContainerActivity extends android.app.Activity{protected Object hostActivityDelegate;}

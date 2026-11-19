@@ -1,0 +1,1 @@
+package com.tencent.shadow.core.runtime.container;public interface HostActivityDelegator{void registerActivityLifecycleCallbacks(android.app.Application.ActivityLifecycleCallbacks w);void unregisterActivityLifecycleCallbacks(android.app.Application.ActivityLifecycleCallbacks w);}

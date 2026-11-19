@@ -1,0 +1,1 @@
+package com.tencent.shadow.core.runtime;public class ShadowApplication extends android.app.Application {}

@@ -1,0 +1,1 @@
+package com.tencent.shadow.core.runtime;public class ShadowActivity extends PluginActivity {public void setOwner(Object o){mPluginApplication=o;}}
