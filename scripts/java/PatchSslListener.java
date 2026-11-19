@@ -1,0 +1,2 @@
+import javassist.*;import java.nio.file.*;
+public class PatchSslListener{public static void main(String[] a)throws Exception{ClassPool p=new ClassPool(false);p.appendClassPath(a[0]);p.appendClassPath(a[1]);p.appendClassPath("/tmp/music-tools/platform33/android-13/android.jar");CtClass c=p.get("bdbl");c.getDeclaredMethod("a").insertBefore("{ if(paradox.music.nativeui.NativeMusicSslGuard.reuseHostGuard()) return; }");c.writeFile(a[2]);System.out.println("Patched only bdbl startup listener to reuse verified process SslGuard");}}

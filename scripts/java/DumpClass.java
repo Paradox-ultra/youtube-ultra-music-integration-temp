@@ -1,0 +1,1 @@
+import org.objectweb.asm.*;import org.objectweb.asm.util.*;import java.util.jar.*;import java.io.*;public class DumpClass{public static void main(String[]a)throws Exception{try(JarFile z=new JarFile(a[0])){new ClassReader(z.getInputStream(z.getJarEntry(a[1]+".class"))).accept(new TraceClassVisitor(new PrintWriter(System.out)),0);}}}

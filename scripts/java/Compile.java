@@ -1,0 +1,1 @@
+public class Compile {public static void main(String[] a){System.exit(javax.tools.ToolProvider.getSystemJavaCompiler().run(null,System.out,System.err,a));}}

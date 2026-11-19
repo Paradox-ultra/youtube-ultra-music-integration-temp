@@ -1,0 +1,1 @@
+public class Inspect{public static void main(String[]a)throws Exception{for(String n:a){Class<?> c=Class.forName(n);System.out.println(c);for(var x:c.getConstructors())System.out.println(x);for(var x:c.getDeclaredMethods())System.out.println(x);}}}
