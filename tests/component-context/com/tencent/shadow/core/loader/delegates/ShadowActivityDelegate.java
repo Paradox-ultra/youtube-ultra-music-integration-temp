@@ -1,0 +1,1 @@
+package com.tencent.shadow.core.loader.delegates;import android.content.*;public class ShadowActivityDelegate{boolean mDependenciesInjected;Context application;protected Context getMPluginApplication(){return application;}public void inject(Context a){application=a;mDependenciesInjected=true;}}

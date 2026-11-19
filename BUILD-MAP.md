@@ -34,3 +34,8 @@ SHA256 `8ff64f6c4402ecbd17eb9c63ecb8e51dfb04a167e7fe9c437bc0a8433c2c8bb0`. Faile
 ## Lifecycle safety candidate Sp1KUXs2
 
 SHA256 `0dc0af16e0cf1a6bd1bd11826ab8996371f7edc1e7803e0800bc470fd45bc64a`. Shared nullable lifecycle observation, failed-delegate detachment and first-error preservation. Unknown primary initialization failure remains unverified. Not phone-tested. See ACTIVITY-LIFECYCLE-SAFETY.md.
+
+
+## Component Application context candidate hw7HHz9a
+
+SHA256 `09f67ca0848af09ccbf4e0875287714ca6235f4a6469bc875b1cc109b9894ed8`. Injected Activity base and service attach expose owning plugin Application. Provider and receiver paths audited. Not phone-tested. See COMPONENT-APPLICATION-CONTEXT.md.

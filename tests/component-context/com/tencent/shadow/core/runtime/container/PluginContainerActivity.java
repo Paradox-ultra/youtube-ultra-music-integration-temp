@@ -1,0 +1,1 @@
+package com.tencent.shadow.core.runtime.container;import com.tencent.shadow.core.loader.delegates.*;public class PluginContainerActivity extends android.app.Activity{Object hostActivityDelegate;public void set(ShadowActivityDelegate d){hostActivityDelegate=d;}}

@@ -1,0 +1,1 @@
+package android.content;public class ContextWrapper extends Context{protected Context base;public ContextWrapper(Context c){base=c;}public Context getApplicationContext(){return base.getApplicationContext();}public Context getBaseContext(){return base;}public String facility(){return base.facility();}}

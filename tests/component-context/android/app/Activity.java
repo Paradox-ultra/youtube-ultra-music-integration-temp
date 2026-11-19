@@ -1,0 +1,1 @@
+package android.app;public class Activity extends android.content.ContextWrapper {public Activity(){super(Host.APP);}static class Host{static final android.content.Context APP=new android.content.Context(){public android.content.Context getApplicationContext(){return this;}};}}

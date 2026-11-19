@@ -1,0 +1,10 @@
+import javassist.*;import java.util.*;import java.util.jar.*;import java.nio.file.*;
+public class PatchComponentApplicationContext {
+ public static void main(String[]a)throws Exception{ClassPool p=new ClassPool(false);p.appendClassPath(a[0]);p.appendClassPath("/tmp/music-tools/platform33/android-13/android.jar");Map<String,byte[]> changes=new HashMap<>();
+ CtClass delegate=p.get("com.tencent.shadow.core.loader.delegates.ShadowActivityDelegate");delegate.addMethod(CtNewMethod.make("public final android.content.Context ultraPluginApplicationContext(){return this.mDependenciesInjected ? (android.content.Context)this.getMPluginApplication() : null;}",delegate));changes.put(delegate.getName().replace('.','/')+".class",delegate.toBytecode());
+ CtClass activity=p.get("com.tencent.shadow.core.runtime.container.PluginContainerActivity");activity.addMethod(CtNewMethod.make("public android.content.Context getApplicationContext(){if(this.hostActivityDelegate instanceof com.tencent.shadow.core.loader.delegates.ShadowActivityDelegate){android.content.Context app=((com.tencent.shadow.core.loader.delegates.ShadowActivityDelegate)this.hostActivityDelegate).ultraPluginApplicationContext();if(app!=null)return app;}return super.getApplicationContext();}",activity));changes.put(activity.getName().replace('.','/')+".class",activity.toBytecode());
+ CtClass service=p.get("com.tencent.shadow.core.runtime.ShadowService");service.getDeclaredMethod("setHostContextAsBase").setBody("{attachBaseContext(paradox.music.nativeui.NativeMusicComponentContext.serviceBase($1,this.getApplicationContext()));}");changes.put(service.getName().replace('.','/')+".class",service.toBytecode());
+ try(JarFile z=new JarFile(a[0]);JarOutputStream out=new JarOutputStream(Files.newOutputStream(Paths.get(a[1])))){var es=z.entries();while(es.hasMoreElements()){var e=es.nextElement();out.putNextEntry(new JarEntry(e.getName()));out.write(changes.containsKey(e.getName())?changes.get(e.getName()):z.getInputStream(e).readAllBytes());out.closeEntry();}}
+ System.out.println("Patched injected activity base and service attach to owning plugin Application; no host global replacement");
+ }
+}
