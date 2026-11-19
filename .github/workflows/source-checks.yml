@@ -1,0 +1,48 @@
+name: Source checks
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check Python scripts compile
+        run: python -m compileall -q scripts tests
+      - name: Validate JSON manifests
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          for path in Path('.').rglob('*.json'):
+              json.loads(path.read_text(encoding='utf-8'))
+              print(f'OK {path}')
+          PY
+      - name: Validate XML files
+        run: |
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+          for path in Path('.').rglob('*.xml'):
+              ET.parse(path)
+              print(f'OK {path}')
+          PY
+      - name: Check loader source invariants
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          source = Path('native-loader/src/paradox/music/nativeui/NativeMusicActivity.java').read_text()
+          method = source.split('private static void ensureApplicationCreated', 1)[1].split('private static void extractNativeLibs', 1)[0]
+          assert 'synchronized (LOCK)' in method
+          assert method.index('synchronized (LOCK)') < method.index('MAIN.post')
+          assert 'done.await' in method
+          assert 'target.callApplicationOnCreate("music")' in method
+          assert 'PRELOAD_STARTED.set(false)' in source
+          assert 'getLongVersionCode()' in source
+          print('OK loader source invariants')
+          PY
